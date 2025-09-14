@@ -26,13 +26,42 @@ async function bootstrap() {
 
   app.use(compression());
 
-  // CORS configuration
-  const frontendUrl =
-    configService.get('FRONTEND_URL') || 'http://localhost:3000';
+  // CORS configuration - Updated to handle multiple origins
+  const allowedOrigins = [
+    'http://localhost:3000', // Local development
+    'https://talksyapp.vercel.app', // Your Vercel deployment
+    configService.get('FRONTEND_URL'), // Environment variable fallback
+  ].filter(Boolean); // Remove any undefined values
+
   app.enableCors({
-    origin: frontendUrl,
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+    origin: (origin, callback) => {
+      // Allow requests with no origin (mobile apps, Postman, etc.)
+      if (!origin) return callback(null, true);
+
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+
+      // For development, you might want to be more permissive
+      if (process.env.NODE_ENV === 'development') {
+        return callback(null, true);
+      }
+
+      const msg =
+        'The CORS policy for this site does not allow access from the specified Origin.';
+      return callback(new Error(msg), false);
+    },
+    methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE', 'OPTIONS'],
+    allowedHeaders: [
+      'Content-Type',
+      'Authorization',
+      'Accept',
+      'Origin',
+      'X-Requested-With',
+    ],
     credentials: true,
+    preflightContinue: false,
+    optionsSuccessStatus: 204,
   });
 
   // Global validation pipe
@@ -50,7 +79,7 @@ async function bootstrap() {
   const port = configService.get<number>('PORT') || 3001;
   await app.listen(port);
   console.log(
-    `Backend server running on port ${port} | Frontend allowed: ${frontendUrl}`,
+    `Backend server running on port ${port} | Allowed origins: ${allowedOrigins.join(', ')}`,
   );
 }
 
