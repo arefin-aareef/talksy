@@ -27,8 +27,11 @@ async function bootstrap() {
   app.use(compression());
 
   // CORS configuration
+  const frontendUrl =
+    configService.get('FRONTEND_URL') || 'http://localhost:3000';
   app.enableCors({
-    origin: configService.get('FRONTEND_URL', 'http://localhost:3000'),
+    origin: frontendUrl,
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     credentials: true,
   });
 
@@ -44,9 +47,11 @@ async function bootstrap() {
   // Global prefix for API routes
   app.setGlobalPrefix('api');
 
-  const port: any = configService.get('PORT', 3001);
+  const port = configService.get<number>('PORT') || 3001;
   await app.listen(port);
-  console.log(`Backend server running on http://localhost:${port}`);
+  console.log(
+    `Backend server running on port ${port} | Frontend allowed: ${frontendUrl}`,
+  );
 }
 
 bootstrap();
