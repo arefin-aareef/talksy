@@ -12,7 +12,7 @@ import { Server, Socket } from 'socket.io';
 import { JwtService } from '@nestjs/jwt';
 import { MessagesService } from '../messages/messages.service';
 import { RedisService } from '../redis/redis.service';
-import { UsersService } from 'src/users/users.service';
+import { UsersService } from '../users/users.service';
 
 interface AuthenticatedSocket extends Socket {
   userId?: string;
