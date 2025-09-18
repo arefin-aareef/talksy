@@ -12,6 +12,7 @@ interface MessageListProps {
 
 export function MessageList({ userId }: MessageListProps) {
 	const { messages, typingUsers } = useChat();
+<<<<<<< HEAD
 	const { user: currentUser, loading: authLoading } = useAuth();
 	const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -20,6 +21,16 @@ export function MessageList({ userId }: MessageListProps) {
 
 	// Sort messages by timestamp
 	const allMessages = conversationMessages.sort(
+=======
+	const { user: currentUser } = useAuth();
+	const messagesEndRef = useRef<HTMLDivElement>(null);
+
+	const userMessages = messages[userId] || [];
+	const currentUserMessages = messages[currentUser?._id || ''] || [];
+
+	// Combine and sort all messages by timestamp
+	const allMessages = [...userMessages, ...currentUserMessages].sort(
+>>>>>>> 3b1baf70efa958465b17a7ba6eb0b828695b622e
 		(a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
 	);
 
@@ -29,6 +40,7 @@ export function MessageList({ userId }: MessageListProps) {
 		messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
 	}, [allMessages]);
 
+<<<<<<< HEAD
 	// Don't render messages until we know who the current user is
 	if (authLoading || !currentUser) {
 		return (
@@ -44,6 +56,12 @@ export function MessageList({ userId }: MessageListProps) {
 				// Fix: currentUser uses 'id', message.sender uses '_id'
 				const isOwnMessage =
 					String(message.sender._id) === String(currentUser.id);
+=======
+	return (
+		<div className='flex-1 overflow-y-auto p-4 space-y-4'>
+			{allMessages.map((message: Message) => {
+				const isOwnMessage = message.sender._id === currentUser?._id;
+>>>>>>> 3b1baf70efa958465b17a7ba6eb0b828695b622e
 
 				return (
 					<div
@@ -62,6 +80,7 @@ export function MessageList({ userId }: MessageListProps) {
 						</div>
 						<div
 							className={clsx(
+<<<<<<< HEAD
 								// Fixed responsive width classes and added better text wrapping
 								'max-w-[85%] sm:max-w-[75%] md:max-w-md lg:max-w-lg xl:max-w-xl px-4 py-2 rounded-2xl',
 								// Better word breaking and overflow handling
@@ -81,13 +100,27 @@ export function MessageList({ userId }: MessageListProps) {
 							}}
 						>
 							<p className='break-words whitespace-pre-wrap leading-relaxed'>
+=======
+								'max-w-[70%] sm:max-w-xs lg:max-w-md px-4 py-2 rounded-2xl break-words',
+								isOwnMessage
+									? 'bg-primary-600 text-white'
+									: 'bg-gray-200 text-gray-900 dark:bg-gray-700 dark:text-gray-100',
+								message.tempId && 'opacity-60'
+							)}
+						>
+							<p className='break-words whitespace-pre-wrap'>
+>>>>>>> 3b1baf70efa958465b17a7ba6eb0b828695b622e
 								{message.content}
 							</p>
 							<p
 								className={clsx(
 									'text-xs mt-1',
 									isOwnMessage
+<<<<<<< HEAD
 										? 'text-blue-100'
+=======
+										? 'text-primary-100'
+>>>>>>> 3b1baf70efa958465b17a7ba6eb0b828695b622e
 										: 'text-gray-500 dark:text-gray-400'
 								)}
 							>

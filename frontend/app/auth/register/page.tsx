@@ -10,7 +10,10 @@ import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { Card } from '@/components/ui/Card';
+<<<<<<< HEAD
 import { APP_CONFIG } from '@/lib/constants';
+=======
+>>>>>>> 3b1baf70efa958465b17a7ba6eb0b828695b622e
 
 const registerSchema = z
 	.object({
@@ -66,7 +69,11 @@ export default function RegisterPage() {
 						Create Account
 					</h2>
 					<p className='mt-2 text-gray-600 dark:text-gray-400'>
+<<<<<<< HEAD
 						Join our {APP_CONFIG.name} community
+=======
+						Join our Talksy community
+>>>>>>> 3b1baf70efa958465b17a7ba6eb0b828695b622e
 					</p>
 				</div>
 

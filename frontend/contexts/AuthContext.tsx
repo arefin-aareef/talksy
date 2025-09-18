@@ -4,7 +4,10 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 import { User, AuthResponse, LoginData, RegisterData } from '@/types';
 import { apiClient } from '@/lib/api';
 import { socketClient } from '@/lib/socket';
+<<<<<<< HEAD
 import { TOAST_MESSAGES } from '@/lib/constants';
+=======
+>>>>>>> 3b1baf70efa958465b17a7ba6eb0b828695b622e
 import toast from 'react-hot-toast';
 
 interface AuthContextType {
@@ -78,7 +81,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 			// Connect to socket
 			socketClient.connect(response.access_token);
 
+<<<<<<< HEAD
 			toast.success(TOAST_MESSAGES.welcomeBack(response.user.username));
+=======
+			toast.success(`Welcome back, ${response.user.username}!`);
+>>>>>>> 3b1baf70efa958465b17a7ba6eb0b828695b622e
 		} catch (error: any) {
 			const message = error.response?.data?.message || 'Login failed';
 			toast.error(message);
@@ -99,7 +106,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 			// Connect to socket
 			socketClient.connect(response.access_token);
 
+<<<<<<< HEAD
 			toast.success(TOAST_MESSAGES.welcome(response.user.username));
+=======
+			toast.success(`Welcome to Chat App, ${response.user.username}!`);
+>>>>>>> 3b1baf70efa958465b17a7ba6eb0b828695b622e
 		} catch (error: any) {
 			const message = error.response?.data?.message || 'Registration failed';
 			toast.error(message);
@@ -121,11 +132,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 			localStorage.removeItem('token');
 			localStorage.removeItem('user');
 			socketClient.disconnect();
+<<<<<<< HEAD
 			toast.success(TOAST_MESSAGES.loggedOut);
 			// Redirect to login page after logout
 			if (typeof window !== 'undefined') {
 				window.location.href = '/auth/login';
 			}
+=======
+			toast.success('Logged out successfully');
+>>>>>>> 3b1baf70efa958465b17a7ba6eb0b828695b622e
 		}
 	};
 

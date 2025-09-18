@@ -10,6 +10,7 @@ export function middleware(request: NextRequest) {
 	}
 
 	// For all other pages, we'll let the client-side handle authentication
+<<<<<<< HEAD
 	// But we'll add cache control headers to prevent back button issues
 	const response = NextResponse.next();
 
@@ -28,6 +29,9 @@ export function middleware(request: NextRequest) {
 	}
 
 	return response;
+=======
+	return NextResponse.next();
+>>>>>>> 3b1baf70efa958465b17a7ba6eb0b828695b622e
 }
 
 export const config = {

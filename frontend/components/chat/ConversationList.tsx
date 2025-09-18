@@ -1,5 +1,8 @@
 import React from 'react';
+<<<<<<< HEAD
 import { useRouter } from 'next/navigation';
+=======
+>>>>>>> 3b1baf70efa958465b17a7ba6eb0b828695b622e
 import { formatDistanceToNow } from 'date-fns';
 import { useChat } from '@/contexts/ChatContext';
 import { Avatar } from '@/components/ui/Avatar';
@@ -8,7 +11,11 @@ import { clsx } from 'clsx';
 // Helper function to safely format date
 const formatSafeDate = (dateString: string | null | undefined): string => {
 	if (!dateString) {
+<<<<<<< HEAD
 		return '';
+=======
+		return 'No messages';
+>>>>>>> 3b1baf70efa958465b17a7ba6eb0b828695b622e
 	}
 
 	try {
@@ -16,16 +23,25 @@ const formatSafeDate = (dateString: string | null | undefined): string => {
 
 		// Check if date is valid
 		if (isNaN(date.getTime())) {
+<<<<<<< HEAD
 			return '';
+=======
+			return 'Invalid date';
+>>>>>>> 3b1baf70efa958465b17a7ba6eb0b828695b622e
 		}
 
 		return formatDistanceToNow(date, { addSuffix: true });
 	} catch {
+<<<<<<< HEAD
 		return '';
+=======
+		return 'Invalid date';
+>>>>>>> 3b1baf70efa958465b17a7ba6eb0b828695b622e
 	}
 };
 
 export function ConversationList() {
+<<<<<<< HEAD
 	const { conversations, activeConversation, setActiveConversation, messages } =
 		useChat();
 	const router = useRouter();
@@ -60,6 +76,10 @@ export function ConversationList() {
 		const bTime = new Date(getLastMessageTime(b) || 0).getTime();
 		return bTime - aTime; // Most recent first
 	});
+=======
+	const { conversations, activeConversation, setActiveConversation } =
+		useChat();
+>>>>>>> 3b1baf70efa958465b17a7ba6eb0b828695b622e
 
 	if (conversations.length === 0) {
 		return (
@@ -70,6 +90,7 @@ export function ConversationList() {
 		);
 	}
 
+<<<<<<< HEAD
 	return (
 		<div className='divide-y divide-gray-200 dark:divide-gray-700'>
 			{sortedConversations?.map(conversation => {
@@ -156,6 +177,52 @@ export function ConversationList() {
 					</button>
 				);
 			})}
+=======
+	console.log('Conversations:', conversations);
+
+	return (
+		<div className='divide-y divide-gray-200 dark:divide-gray-700'>
+			{conversations?.map(conversation => (
+				<button
+					key={conversation._id}
+					onClick={() => setActiveConversation(conversation.user._id)}
+					className={clsx(
+						'w-full p-4 text-left hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors',
+						activeConversation === conversation.user._id &&
+							'bg-primary-50 dark:bg-primary-900/20'
+					)}
+				>
+					<div className='flex items-center space-x-3'>
+						<Avatar
+							src={conversation.user.avatar}
+							alt={conversation.user.username}
+							online={conversation.user.isOnline}
+						/>
+						<div className='flex-1 min-w-0'>
+							<div className='flex justify-between items-start'>
+								<p className='font-medium text-gray-900 dark:text-white truncate'>
+									{conversation.user.username}
+								</p>
+								<p className='text-xs text-gray-500 dark:text-gray-400 mt-1'>
+									{/* {formatSafeDate(conversation.lastMessage?.createdAt)} */}
+									Total Messages
+								</p>
+							</div>
+							<div className='flex justify-between items-center mt-1'>
+								<p className='text-sm text-gray-600 dark:text-gray-300 truncate'>
+									Last Active {formatSafeDate(conversation.user?.lastSeen)}
+								</p>
+								{conversation.unreadCount > 0 && (
+									<span className='inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white bg-primary-600 rounded-full'>
+										{conversation.unreadCount}
+									</span>
+								)}
+							</div>
+						</div>
+					</div>
+				</button>
+			))}
+>>>>>>> 3b1baf70efa958465b17a7ba6eb0b828695b622e
 		</div>
 	);
 }

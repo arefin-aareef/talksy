@@ -2,7 +2,11 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Send, AlertCircle, Wifi, WifiOff, Loader2 } from 'lucide-react';
 import { useChat } from '@/contexts/ChatContext';
 import { Button } from '@/components/ui/Button';
+<<<<<<< HEAD
 import { socketClient } from '@/lib/socket';
+=======
+import { socketClient } from '@/lib/socket'; 
+>>>>>>> 3b1baf70efa958465b17a7ba6eb0b828695b622e
 
 interface MessageInputProps {
 	receiverId: string;
@@ -19,6 +23,7 @@ export function MessageInput({ receiverId }: MessageInputProps) {
 
 	const { sendMessage, startTyping, stopTyping } = useChat();
 	const typingTimeoutRef = useRef<NodeJS.Timeout>();
+<<<<<<< HEAD
 	const inputRef = useRef<HTMLInputElement>(null);
 
 	// Auto-focus input when receiver changes
@@ -32,6 +37,8 @@ export function MessageInput({ receiverId }: MessageInputProps) {
 			return () => clearTimeout(focusTimeout);
 		}
 	}, [receiverId]);
+=======
+>>>>>>> 3b1baf70efa958465b17a7ba6eb0b828695b622e
 
 	// Monitor connection status
 	useEffect(() => {
@@ -74,6 +81,7 @@ export function MessageInput({ receiverId }: MessageInputProps) {
 			// Generate temp ID for optimistic updates
 			const tempId = `temp_${Date.now()}_${Math.random()}`;
 
+<<<<<<< HEAD
 			// Send message - this will automatically update conversation order in context
 			await sendMessage(receiverId, message.trim(), tempId);
 			setMessage('');
@@ -83,6 +91,11 @@ export function MessageInput({ receiverId }: MessageInputProps) {
 			setTimeout(() => {
 				inputRef.current?.focus();
 			}, 100);
+=======
+			await sendMessage(receiverId, message.trim(), tempId);
+			setMessage('');
+			handleStopTyping();
+>>>>>>> 3b1baf70efa958465b17a7ba6eb0b828695b622e
 		} catch (error) {
 			const errorMessage =
 				error instanceof Error ? error.message : 'Failed to send message';
@@ -195,8 +208,14 @@ export function MessageInput({ receiverId }: MessageInputProps) {
 						connectionStatus === 'disconnected') && (
 						<Button
 							size='sm'
+<<<<<<< HEAD
 							onClick={() => {
 								const token = localStorage.getItem('token');
+=======
+							// variant='outline'
+							onClick={() => {
+								const token = localStorage.getItem('token'); // Adjust as needed
+>>>>>>> 3b1baf70efa958465b17a7ba6eb0b828695b622e
 								if (token) {
 									socketClient.connect(token).catch(console.error);
 								}
@@ -233,7 +252,10 @@ export function MessageInput({ receiverId }: MessageInputProps) {
 			<form onSubmit={handleSubmit} className='p-4'>
 				<div className='flex space-x-2'>
 					<input
+<<<<<<< HEAD
 						ref={inputRef}
+=======
+>>>>>>> 3b1baf70efa958465b17a7ba6eb0b828695b622e
 						type='text'
 						value={message}
 						onChange={handleInputChange}
@@ -279,6 +301,34 @@ export function MessageInput({ receiverId }: MessageInputProps) {
 					</div>
 				)}
 			</form>
+<<<<<<< HEAD
+=======
+
+			{/* Debug Info (only in development) */}
+			{/* {process.env.NODE_ENV === 'development' && (
+				<div className='px-4 pb-2'>
+					<details className='text-xs text-gray-500'>
+						<summary className='cursor-pointer hover:text-gray-700'>
+							Debug Info
+						</summary>
+						<div className='mt-1 space-y-1'>
+							<div>Connection Status: {connectionStatus}</div>
+							<div>
+								Socket Connected: {socketClient.isConnected ? 'Yes' : 'No'}
+							</div>
+							<div>Is Sending: {isSending ? 'Yes' : 'No'}</div>
+							<div>Is Typing: {isTyping ? 'Yes' : 'No'}</div>
+							<div>
+								Reconnect Attempts: {socketClient.reconnectAttemptCount}
+							</div>
+							<div>
+								Socket ID: {socketClient.isConnected ? 'Connected' : 'N/A'}
+							</div>
+						</div>
+					</details>
+				</div>
+			)} */}
+>>>>>>> 3b1baf70efa958465b17a7ba6eb0b828695b622e
 		</div>
 	);
 }

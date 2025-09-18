@@ -1,25 +1,38 @@
 import React, { useState, useEffect } from 'react';
+<<<<<<< HEAD
 import { useRouter } from 'next/navigation';
 import { Search, Users, UserCheck, UserX, MessageCircle } from 'lucide-react';
+=======
+import { Search, Users, UserCheck, UserX } from 'lucide-react';
+>>>>>>> 3b1baf70efa958465b17a7ba6eb0b828695b622e
 import { useChat } from '@/contexts/ChatContext';
 import { useAuth } from '@/contexts/AuthContext';
 import { Avatar } from '@/components/ui/Avatar';
 import { Input } from '@/components/ui/Input';
+<<<<<<< HEAD
 import { Button } from '@/components/ui/Button';
+=======
+>>>>>>> 3b1baf70efa958465b17a7ba6eb0b828695b622e
 import { apiClient } from '@/lib/api';
 import { User } from '@/types';
 
 export function UserList() {
 	const { onlineUsers, setActiveConversation } = useChat();
 	const { user: currentUser } = useAuth();
+<<<<<<< HEAD
 	const router = useRouter();
+=======
+>>>>>>> 3b1baf70efa958465b17a7ba6eb0b828695b622e
 	const [searchQuery, setSearchQuery] = useState('');
 	const [searchResults, setSearchResults] = useState<User[]>([]);
 	const [allUsers, setAllUsers] = useState<User[]>([]);
 	const [searching, setSearching] = useState(false);
 	const [loading, setLoading] = useState(false);
 	const [filter, setFilter] = useState<'all' | 'online' | 'offline'>('all');
+<<<<<<< HEAD
 	const [hoveredUser, setHoveredUser] = useState<string | null>(null);
+=======
+>>>>>>> 3b1baf70efa958465b17a7ba6eb0b828695b622e
 
 	// Fetch all users on component mount
 	useEffect(() => {
@@ -80,11 +93,14 @@ export function UserList() {
 	const onlineCount = onlineUsersToShow.length;
 	const offlineCount = offlineUsersToShow.length;
 
+<<<<<<< HEAD
 	const handleStartChat = (userId: string) => {
 		// Navigate to chat page with the user
 		router.push(`/chat?conversation=${userId}`);
 	};
 
+=======
+>>>>>>> 3b1baf70efa958465b17a7ba6eb0b828695b622e
 	const renderUserList = (
 		users: User[],
 		title: string,
@@ -102,11 +118,18 @@ export function UserList() {
 				</div>
 				<div className='divide-y divide-gray-200 dark:divide-gray-700'>
 					{users.map(user => (
+<<<<<<< HEAD
 						<div
 							key={user._id}
 							className='relative group p-4 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors'
 							onMouseEnter={() => setHoveredUser(user._id)}
 							onMouseLeave={() => setHoveredUser(null)}
+=======
+						<button
+							key={user._id}
+							onClick={() => setActiveConversation(user._id)}
+							className='w-full p-4 text-left hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors'
+>>>>>>> 3b1baf70efa958465b17a7ba6eb0b828695b622e
 						>
 							<div className='flex items-center space-x-3'>
 								<Avatar
@@ -128,6 +151,7 @@ export function UserList() {
 										{user.isOnline ? 'Online' : 'Offline'}
 									</p>
 								</div>
+<<<<<<< HEAD
 								{/* Chat button - visible on hover (desktop) or always (mobile) */}
 								<Button
 									size='sm'
@@ -143,6 +167,10 @@ export function UserList() {
 								</Button>
 							</div>
 						</div>
+=======
+							</div>
+						</button>
+>>>>>>> 3b1baf70efa958465b17a7ba6eb0b828695b622e
 					))}
 				</div>
 			</div>
@@ -241,11 +269,18 @@ export function UserList() {
 							// Show flat list for filtered views or search results
 							<div className='divide-y divide-gray-200 dark:divide-gray-700'>
 								{usersToDisplay.map(user => (
+<<<<<<< HEAD
 									<div
 										key={user._id}
 										className='relative group p-4 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors'
 										onMouseEnter={() => setHoveredUser(user._id)}
 										onMouseLeave={() => setHoveredUser(null)}
+=======
+									<button
+										key={user._id}
+										onClick={() => setActiveConversation(user._id)}
+										className='w-full p-4 text-left hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors'
+>>>>>>> 3b1baf70efa958465b17a7ba6eb0b828695b622e
 									>
 										<div className='flex items-center space-x-3'>
 											<Avatar
@@ -267,6 +302,7 @@ export function UserList() {
 													{user.isOnline ? 'Online' : 'Offline'}
 												</p>
 											</div>
+<<<<<<< HEAD
 											{/* Chat button - visible on hover (desktop) or always (mobile) */}
 											<Button
 												size='sm'
@@ -282,6 +318,10 @@ export function UserList() {
 											</Button>
 										</div>
 									</div>
+=======
+										</div>
+									</button>
+>>>>>>> 3b1baf70efa958465b17a7ba6eb0b828695b622e
 								))}
 							</div>
 						)}
@@ -290,4 +330,8 @@ export function UserList() {
 			</div>
 		</div>
 	);
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 3b1baf70efa958465b17a7ba6eb0b828695b622e

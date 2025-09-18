@@ -11,7 +11,10 @@ import { User, Message, Conversation, TypingUser } from '@/types';
 import { apiClient } from '@/lib/api';
 import { socketClient } from '@/lib/socket';
 import { useAuth } from './AuthContext';
+<<<<<<< HEAD
 import { TOAST_MESSAGES } from '@/lib/constants';
+=======
+>>>>>>> 3b1baf70efa958465b17a7ba6eb0b828695b622e
 import toast from 'react-hot-toast';
 
 interface ChatContextType {
@@ -68,6 +71,7 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
 	>(null);
 	const [socketReconnectAttempts, setSocketReconnectAttempts] = useState(0);
 
+<<<<<<< HEAD
 	// Helper function to update conversation order
 	const updateConversationOrder = useCallback(
 		(userId: string, messageData?: Message) => {
@@ -99,6 +103,8 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
 		[]
 	);
 
+=======
+>>>>>>> 3b1baf70efa958465b17a7ba6eb0b828695b622e
 	// Initialize socket connection when user is authenticated
 	useEffect(() => {
 		if (user && token) {
@@ -148,7 +154,11 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
 			setIsSocketConnected(false);
 
 			// Show user-friendly error message
+<<<<<<< HEAD
 			toast.error(TOAST_MESSAGES.connectionFailed);
+=======
+			toast.error('Connection failed. Some features may not work properly.');
+>>>>>>> 3b1baf70efa958465b17a7ba6eb0b828695b622e
 		} finally {
 			setIsSocketConnecting(false);
 		}
@@ -172,7 +182,11 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
 			setIsSocketConnected(true);
 			setupSocketEventListeners();
 
+<<<<<<< HEAD
 			toast.success(TOAST_MESSAGES.connectionRestored);
+=======
+			toast.success('Connection restored!');
+>>>>>>> 3b1baf70efa958465b17a7ba6eb0b828695b622e
 		} catch (error) {
 			const errorMessage =
 				error instanceof Error ? error.message : 'Reconnection failed';
@@ -237,11 +251,19 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
 			// Add message to the conversation
 			setMessages(prev => ({
 				...prev,
+<<<<<<< HEAD
 				[senderId]: [...(prev[senderId] || []), message],
 			}));
 
 			// Update conversation order
 			updateConversationOrder(senderId, message);
+=======
+				[senderId]: [message, ...(prev[senderId] || [])],
+			}));
+
+			// Update conversations list
+			refreshConversations();
+>>>>>>> 3b1baf70efa958465b17a7ba6eb0b828695b622e
 
 			// Update unread count
 			setUnreadCount(prev => prev + 1);
@@ -254,6 +276,7 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
 				});
 			}
 		},
+<<<<<<< HEAD
 		[activeConversation, updateConversationOrder]
 	);
 
@@ -290,6 +313,30 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
 		},
 		[user, updateConversationOrder]
 	);
+=======
+		[activeConversation]
+	);
+
+	const handleMessageSent = useCallback((data: any) => {
+		const receiverId = data.receiver._id;
+
+		// Update the temporary message with real ID
+		if (data.tempId) {
+			setMessages(prev => ({
+				...prev,
+				[receiverId]:
+					prev[receiverId]?.map(msg =>
+						msg.tempId === data.tempId
+							? { ...msg, _id: data.id, tempId: undefined }
+							: msg
+					) || [],
+			}));
+		}
+
+		// Refresh conversations to update last message
+		refreshConversations();
+	}, []);
+>>>>>>> 3b1baf70efa958465b17a7ba6eb0b828695b622e
 
 	const handleUserOnline = useCallback((user: any) => {
 		setOnlineUsers(prev => {
@@ -326,6 +373,7 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
 	const refreshConversations = async () => {
 		try {
 			const data = await apiClient.getConversations();
+<<<<<<< HEAD
 			// Sort conversations when they're first loaded
 			const sortedData = data.sort((a: Conversation, b: Conversation) => {
 				const aTime = new Date(
@@ -340,6 +388,12 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
 		} catch (error) {
 			console.error('Error loading conversations:', error);
 			toast.error(TOAST_MESSAGES.conversationsLoadFailed);
+=======
+			setConversations(data);
+		} catch (error) {
+			console.error('Error loading conversations:', error);
+			toast.error('Failed to load conversations');
+>>>>>>> 3b1baf70efa958465b17a7ba6eb0b828695b622e
 		}
 	};
 
@@ -386,7 +440,11 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
 			}
 		} catch (error) {
 			console.error('Error loading messages:', error);
+<<<<<<< HEAD
 			toast.error(TOAST_MESSAGES.messagesLoadFailed);
+=======
+			toast.error('Failed to load messages');
+>>>>>>> 3b1baf70efa958465b17a7ba6eb0b828695b622e
 		} finally {
 			setLoading(false);
 		}
@@ -402,10 +460,14 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
 		const messageId = tempId || `temp-${Date.now()}-${Math.random()}`;
 		const tempMessage: Message = {
 			_id: messageId,
+<<<<<<< HEAD
 			sender: {
 				...user,
 				_id: user.id, // Convert id to _id for consistency with message structure
 			},
+=======
+			sender: user,
+>>>>>>> 3b1baf70efa958465b17a7ba6eb0b828695b622e
 			receiver: { _id: receiverId } as User,
 			content,
 			type: 'text',
@@ -421,9 +483,12 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
 			[receiverId]: [...(prev[receiverId] || []), tempMessage],
 		}));
 
+<<<<<<< HEAD
 		// Immediately update conversation order when sending
 		updateConversationOrder(receiverId, tempMessage);
 
+=======
+>>>>>>> 3b1baf70efa958465b17a7ba6eb0b828695b622e
 		try {
 			// Try to send via socket first
 			if (isSocketConnected) {
@@ -447,8 +512,13 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
 						) || [],
 				}));
 
+<<<<<<< HEAD
 				// Update conversation order with real message data
 				updateConversationOrder(receiverId, response);
+=======
+				// Refresh conversations
+				refreshConversations();
+>>>>>>> 3b1baf70efa958465b17a7ba6eb0b828695b622e
 			}
 		} catch (error) {
 			console.error('Error sending message:', error);
@@ -461,7 +531,11 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
 			}));
 
 			// Show error with retry option
+<<<<<<< HEAD
 			toast.error(TOAST_MESSAGES.messageFailed, {
+=======
+			toast.error('Failed to send message', {
+>>>>>>> 3b1baf70efa958465b17a7ba6eb0b828695b622e
 				duration: 4000,
 				style: {
 					background: '#363636',
@@ -556,4 +630,8 @@ export function useChat() {
 		throw new Error('useChat must be used within a ChatProvider');
 	}
 	return context;
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 3b1baf70efa958465b17a7ba6eb0b828695b622e

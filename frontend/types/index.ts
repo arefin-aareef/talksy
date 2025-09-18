@@ -26,16 +26,24 @@ export interface Message {
 export interface Conversation {
 	_id: string;
 	user: User;
+<<<<<<< HEAD
 	lastMessage?: {
+=======
+	lastMessage: {
+>>>>>>> 3b1baf70efa958465b17a7ba6eb0b828695b622e
 		_id: string;
 		content: string;
 		createdAt: string;
 		isRead: boolean;
 	};
+<<<<<<< HEAD
 	lastMessageTime?: string; // Added for conversation sorting
 	unreadCount: number;
 	createdAt?: string;
 	updatedAt?: string;
+=======
+	unreadCount: number;
+>>>>>>> 3b1baf70efa958465b17a7ba6eb0b828695b622e
 }
 
 export interface AuthResponse {
@@ -90,6 +98,7 @@ export interface MessageResponse {
 	data: Message[];
 	meta: PaginationMeta;
 }
+<<<<<<< HEAD
 
 export interface User {
 	id: string; // Changed from _id to id
@@ -183,3 +192,5 @@ export interface MessageResponse {
 	data: Message[];
 	meta: PaginationMeta;
 }
+=======
+>>>>>>> 3b1baf70efa958465b17a7ba6eb0b828695b622e

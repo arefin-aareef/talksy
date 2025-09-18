@@ -10,7 +10,10 @@ import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { Card } from '@/components/ui/Card';
+<<<<<<< HEAD
 import { APP_CONFIG } from '@/lib/constants';
+=======
+>>>>>>> 3b1baf70efa958465b17a7ba6eb0b828695b622e
 
 const loginSchema = z.object({
 	email: z.string().email('Please enter a valid email address'),
@@ -51,7 +54,11 @@ export default function LoginPage() {
 						Welcome Back
 					</h2>
 					<p className='mt-2 text-gray-600 dark:text-gray-400'>
+<<<<<<< HEAD
 						Sign in to your {APP_CONFIG.name} account
+=======
+						Sign in to your Talksy account
+>>>>>>> 3b1baf70efa958465b17a7ba6eb0b828695b622e
 					</p>
 				</div>
 
